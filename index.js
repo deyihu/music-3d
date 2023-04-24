@@ -126,14 +126,14 @@ function ignoreLights(scene) {
 }
 
 function addPhone() {
-    loader.load('./modules/手机.glb', function (gltf) {
+    loader.load('./modules/phone-white.glb', function (gltf) {
         ignoreLights(gltf.scene);
         scene.add(gltf.scene);
     });
 }
 
 function addQQMusicModel() {
-    loader.load('./modules/QQ音乐-01 (1).glb', function (gltf) {
+    loader.load('./modules/qqmusic.glb', function (gltf) {
         ignoreLights(gltf.scene);
         const group = new THREE.Group();
         group.position.x = -0.95;
@@ -174,7 +174,7 @@ function loopCD() {
 }
 
 function addMusicBox() {
-    loader.load('./modules/音响 (1).glb', function (gltf) {
+    loader.load('./modules/musicbox.glb', function (gltf) {
         ignoreLights(gltf.scene);
         const musicBox = gltf.scene;
         musicBox.rotation.x = -Math.PI / 2;

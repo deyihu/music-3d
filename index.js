@@ -126,14 +126,14 @@ function ignoreLights(scene) {
 }
 
 function addPhone() {
-    loader.load('./data/手机.glb', function (gltf) {
+    loader.load('./modules/手机.glb', function (gltf) {
         ignoreLights(gltf.scene);
         scene.add(gltf.scene);
     });
 }
 
 function addQQMusicModel() {
-    loader.load('./data/QQ音乐-01 (1).glb', function (gltf) {
+    loader.load('./modules/QQ音乐-01 (1).glb', function (gltf) {
         ignoreLights(gltf.scene);
         const group = new THREE.Group();
         group.position.x = -0.95;
@@ -152,7 +152,7 @@ function addQQMusicModel() {
 
 
 function addCD() {
-    loader.load('./data/cd.glb', function (gltf) {
+    loader.load('./modules/cd.glb', function (gltf) {
         ignoreLights(gltf.scene);
         scene.add(gltf.scene);
         gltf.scene.scale.x = .5;
@@ -174,7 +174,7 @@ function loopCD() {
 }
 
 function addMusicBox() {
-    loader.load('./data/音响 (1).glb', function (gltf) {
+    loader.load('./modules/音响 (1).glb', function (gltf) {
         ignoreLights(gltf.scene);
         const musicBox = gltf.scene;
         musicBox.rotation.x = -Math.PI / 2;

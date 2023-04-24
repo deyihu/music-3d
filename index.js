@@ -150,6 +150,7 @@ function addQQMusicModel() {
     });
 }
 
+
 function addCD() {
     loader.load('./data/cd.glb', function (gltf) {
         ignoreLights(gltf.scene);
@@ -164,6 +165,7 @@ function addCD() {
     });
 }
 
+//CD动画
 function loopCD() {
     if (!runing) {
         return;
@@ -192,6 +194,7 @@ function addMusicBox() {
     });
 }
 
+//音响动画
 function loopMusicBox() {
     if (!runing) {
         return;
@@ -216,35 +219,36 @@ function loopMusicBox() {
 
 function initVisualizer(audioBuffer) {
 
+    //创建 AudioBufferSourceNode
     var source = audioContext.createBufferSource();
     source.buffer = audioBuffer;
 
     // Must invoked right after click event
-    if (source.noteOn) {
-        source.noteOn(0);
-    } else {
-        source.start(0);
-    }
-
+    source.start(0);
+    // AudioContext的createAnalyser()方法能创建一个AnalyserNode，可以用来获取音频时间和频率数据，以及实现数据可视化。
     var analyzer = audioContext.createAnalyser();
-    var gainNode = audioContext.createGain();
     analyzer.fftSize = 4096;
 
+    var gainNode = audioContext.createGain();
     gainNode.gain.value = 1;
     source.connect(gainNode);
     gainNode.connect(analyzer);
+    // Connect the source to be analysed
     analyzer.connect(audioContext.destination);
 
+    // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
     var frequencyBinCount = analyzer.frequencyBinCount;
     var dataArray = new Uint8Array(frequencyBinCount);
 
 
+    //循环读取音频的数据
     function update() {
         analyzer.getByteFrequencyData(dataArray);
         const scale = 1;
         var dataProvider = [];
         let isEmpty = true;
 
+        //将音频的数据分布到50x50个格子上
         for (var i = 0; i < size * size; i++) {
             var x = i % size;
             var y = Math.floor(i / size);
@@ -270,6 +274,7 @@ function initVisualizer(audioBuffer) {
         var musdata = [];
         let min = Infinity, max = -Infinity;
 
+        //组装每个格子的位置和高度数据
         for (var i = 0; i < dataProvider.length; i++) {
             var d = dataProvider[i];
             var x = d[0],
@@ -286,6 +291,7 @@ function initVisualizer(audioBuffer) {
             });
         }
         // console.log(min, max);
+        //利用柱子可视化音频数据
         addBar(musdata);
         updateId = setTimeout(update, UPDATE_DURATION);
     }
